@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Flex, Box, Text, Title, Image } from '@mantine/core';
+import { Carousel } from '@mantine/carousel';
 import { Helmet } from 'react-helmet';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import { fetchGame } from '../../slices/gamesSlice';
@@ -17,10 +18,6 @@ function GamePage() {
   }, []);
 
   console.log(currentGame);
-
-  // картинка/постер
-  // карусель скриншотов
-  // системные требования
 
   return (
     <>
@@ -55,11 +52,13 @@ function GamePage() {
                 ))}
               </Box>
             </Flex>
-            <Flex wrap="wrap" gap="20px" align="center">
+            <Carousel maw='100%' mx="auto" withIndicators>
               {currentGame.screenshots.map((screenshot) => (
-                <Image key={screenshot.id} src={screenshot.image} alt={currentGame.title} />
+                <Carousel.Slide key={screenshot.id}>
+                  <Image src={screenshot.image} alt={currentGame.title} />
+                </Carousel.Slide>
               ))}
-            </Flex>
+            </Carousel>
           </Box>
         )}
       </main>
