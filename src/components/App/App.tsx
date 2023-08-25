@@ -1,8 +1,8 @@
 import { lazy, Suspense, useState } from 'react';
-import { MantineProvider, ColorSchemeProvider, AppShell, Flex, ColorScheme } from '@mantine/core';
+import { MantineProvider, ColorSchemeProvider, AppShell, ColorScheme } from '@mantine/core';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from '../Header/Header';
-// import Spinner from '../Spinner/Spinner';
+import Spinner from '../Spinner/Spinner';
 
 const MainPage = lazy(() => import('../../pages/MainPage/MainPage'));
 const GamePage = lazy(() => import('../../pages/GamePage/GamePage'));
@@ -19,7 +19,7 @@ function App() {
       <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
         <Router>
           <AppShell p="0px 10px" header={<Header />} maw="1400px" m="0 auto">
-            <Suspense fallback={<h1>Loading...</h1>}>
+            <Suspense fallback={<Spinner />}>
               <Routes>
                 <Route path="/" element={<MainPage />} />
                 <Route path="/:gameId" element={<GamePage />} />

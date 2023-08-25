@@ -1,9 +1,7 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { Flex, Skeleton, Title, Image } from '@mantine/core';
-import { fetchGames } from '../../slices/gamesSlice';
-import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
+import { useAppSelector } from '../../hooks/useRedux';
 import './GameList.scss';
 
 function GameList() {
