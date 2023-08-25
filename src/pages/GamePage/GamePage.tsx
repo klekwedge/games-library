@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Flex, Box, Image } from '@chakra-ui/react';
+import { Flex, Box, Text, Title, Image } from '@mantine/core';
 import { Helmet } from 'react-helmet';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import { fetchGame } from '../../slices/gamesSlice';
@@ -31,40 +31,31 @@ function GamePage() {
       <main>
         {currentGame && (
           <Box>
-            <h1>{currentGame.title}</h1>
-            <Flex justifyContent="space-between" gap="50px">
-              <Image
-                src={currentGame.thumbnail}
-                alt={currentGame.title}
-                objectFit="cover"
-                flex="1 1 50%"
-                w="100%"
-                h="100%"
-                borderRadius="20px"
-              />
-
-              <Box flex="1 1 50%" p="10px 0px">
-                <h2>About</h2>
-                <p>{currentGame.description}</p>
+            <Title order={1}>{currentGame.title}</Title>
+            <Flex justify="space-between" gap="50px">
+              <Image src={currentGame.thumbnail} alt={currentGame.title} fit="cover" w="100%" h="100%" />
+              <Box p="10px 0px">
+                <Title order={2}>About</Title>
+                <Text fz="xl">{currentGame.description}</Text>
               </Box>
             </Flex>
-            <Flex justifyContent="space-between">
+            <Flex justify="space-between">
               <Box>
-                <h3>Genre: {currentGame.genre}</h3>
-                <h3> Publisher: {currentGame.publisher}</h3>
-                <h3> Developer: {currentGame.developer}</h3>
-                <h3> Release date: {currentGame.release_date}</h3>
+                <Title order={3}>Genre: {currentGame.genre}</Title>
+                <Title order={3}>Publisher: {currentGame.publisher}</Title>
+                <Title order={3}>Developer: {currentGame.developer}</Title>
+                <Title order={3}>Release date: {currentGame.release_date}</Title>
               </Box>
               <Box>
-                Requirements:
+                <Title order={3}> Requirements:</Title>
                 {Object.entries(currentGame.minimum_system_requirements).map((requirement) => (
-                  <h3 key={requirement[0]}>
+                  <Title order={4} key={requirement[0]}>
                     {requirement[0][0].toUpperCase() + requirement[0].slice(1)}: {requirement[1]}
-                  </h3>
+                  </Title>
                 ))}
               </Box>
             </Flex>
-            <Flex flexWrap="wrap" gap="20px" alignItems="center">
+            <Flex wrap="wrap" gap="20px" align="center">
               {currentGame.screenshots.map((screenshot) => (
                 <Image key={screenshot.id} src={screenshot.image} alt={currentGame.title} />
               ))}

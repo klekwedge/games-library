@@ -1,8 +1,7 @@
-import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { Flex, Skeleton, Heading, List, ListItem, Image } from '@chakra-ui/react';
+import { Flex, Skeleton, Title, Image } from '@mantine/core';
 import { fetchGames } from '../../slices/gamesSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import './GameList.scss';
@@ -22,9 +21,9 @@ function GameList() {
 
   if (gamesLoadingStatus === 'loading') {
     return (
-      <Flex gap="20px" flexWrap="wrap">
+      <Flex gap="20px" wrap="wrap">
         {[...Array(20).keys()].map(() => (
-          <Skeleton key={uuidv4()} width="256px" h="200px" flex="1 1 20%" borderRadius="10px" />
+          <Skeleton key={uuidv4()} width="256px" h="200px" radius="10px" />
         ))}
       </Flex>
     );
@@ -41,47 +40,28 @@ function GameList() {
       </Heading> */}
       {/* {currentGenre && <Heading as="h3" fontSize="16px" mb="32px" dangerouslySetInnerHTML={defineDescription()} />} */}
       {games.length && (
-        <Flex gap="70px" flexDirection="column">
-          <AnimatePresence>
-            <List display="flex" gap="20px" flexWrap="wrap">
-              {games.map((game) => (
-                <ListItem
-                  onClick={() => gameOnClick(game.id)}
-                  as={motion.li}
-                  className="game-item"
-                  key={game.id}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: '1' }}
-                >
-                  <Image
-                    src={game.thumbnail}
-                    alt={game.title}
-                    objectFit="cover"
-                    maxW="100%"
-                    maxH="160px"
-                    w="100%"
-                    h="100%"
-                  />
-                  <Flex p="10px" flexDir="column" gap="5px" w="100%">
-                    <Heading as="h4" fontWeight="500" fontSize="20px" transition="all 0.3s ease" color="#d4d4d4">
-                      {game.title}
-                    </Heading>
-                    <Heading as="h4" fontWeight="500" fontSize="16px" color="#d4d4d4">
-                      Genre: {game.genre}
-                    </Heading>
-                    <Heading as="h4" fontWeight="500" fontSize="16px" color="#d4d4d4">
-                      Publisher: {game.publisher}
-                    </Heading>
-                    <Heading as="h4" fontWeight="500" fontSize="16px" color="#d4d4d4">
-                      Release date: {game.release_date}
-                    </Heading>
-                  </Flex>
-                </ListItem>
-              ))}
-            </List>
-          </AnimatePresence>
+        <Flex gap="70px" direction="column">
+          <Flex display="flex" gap="20px" wrap="wrap">
+            {games.map((game) => (
+              <Flex onClick={() => gameOnClick(game.id)} className="game-item" key={game.id}>
+                <Image src={game.thumbnail} alt={game.title} fit="cover" maw="100%" mah="160px" w="100%" h="100%" />
+                <Flex p="20px" direction="column" gap="5px" w="100%">
+                  <Title order={4} fw="500" fz="20px" color="#d4d4d4">
+                    {game.title}
+                  </Title>
+                  <Title order={4} fw="500" fz="16px" color="#d4d4d4">
+                    Genre: {game.genre}
+                  </Title>
+                  <Title order={4} fw="500" fz="16px" color="#d4d4d4">
+                    Publisher: {game.publisher}
+                  </Title>
+                  <Title order={4} fw="500" fz="16px" color="#d4d4d4">
+                    Release date: {game.release_date}
+                  </Title>
+                </Flex>
+              </Flex>
+            ))}
+          </Flex>
         </Flex>
       )}
     </section>

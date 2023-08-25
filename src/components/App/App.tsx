@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { Flex } from '@chakra-ui/react';
+import { Flex } from '@mantine/core';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 // import Header from '../Header/Header';
 // import Spinner from '../Spinner/Spinner';
@@ -11,7 +11,7 @@ const Page404 = lazy(() => import('../../pages/Page404/Page404'));
 function App() {
   return (
     <Router>
-      <Flex justifyContent="center" flexDir="column" m="0 auto" maxWidth="1400px" p="20px">
+      <Flex justify="center" dir="column" m="0 auto" maw="1400px" p="20px">
         {/* <Header /> */}
         <Suspense fallback={<h1>Loading...</h1>}>
           <Routes>
