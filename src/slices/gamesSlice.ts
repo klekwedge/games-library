@@ -1,10 +1,10 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import useFetch from '../hooks/useFetch';
-import { Loading } from '../types';
+import { IGame, Loading } from '../types';
 
 export type GamesState = {
-  games: []
+  games: IGame[]
   gamesLoadingStatus: Loading
 };
 
@@ -31,7 +31,7 @@ const gamesSlice = createSlice({
       })
       .addCase(fetchGames.fulfilled, (state, action) => {
         state.gamesLoadingStatus = 'idle';
-        state.games = action.payload.results;
+        state.games = action.payload;
       })
       .addCase(fetchGames.rejected, (state) => {
         state.gamesLoadingStatus = 'error';
