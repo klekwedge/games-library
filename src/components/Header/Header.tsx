@@ -6,7 +6,7 @@ function Header() {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
 
   return (
-    <Flex justify="space-between" align="center" maw="1400px" m="0 auto" p="20px 0px">
+    <Flex justify="space-between" align="center" m="0 auto" p="20px 0px">
       <Title order={2}>
         <Link to="/" style={{ color: 'inherit' }}>
           Main Page

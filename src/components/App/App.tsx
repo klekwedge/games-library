@@ -9,7 +9,7 @@ const GamePage = lazy(() => import('../../pages/GamePage/GamePage'));
 const Page404 = lazy(() => import('../../pages/Page404/Page404'));
 
 function App() {
-  const [colorScheme, setColorScheme] = useState<ColorScheme>('light');
+  const [colorScheme, setColorScheme] = useState<ColorScheme>('dark');
 
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
@@ -18,16 +18,14 @@ function App() {
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
         <Router>
-          <AppShell p='0px 10px' header={<Header />}>
-            <Flex justify="center" direction="column" m="0 auto" maw="1400px">
-              <Suspense fallback={<h1>Loading...</h1>}>
-                <Routes>
-                  <Route path="/" element={<MainPage />} />
-                  <Route path="/:gameId" element={<GamePage />} />
-                  <Route path="*" element={<Page404 />} />
-                </Routes>
-              </Suspense>
-            </Flex>
+          <AppShell p="0px 10px" header={<Header />} maw="1400px" m="0 auto">
+            <Suspense fallback={<h1>Loading...</h1>}>
+              <Routes>
+                <Route path="/" element={<MainPage />} />
+                <Route path="/:gameId" element={<GamePage />} />
+                <Route path="*" element={<Page404 />} />
+              </Routes>
+            </Suspense>
           </AppShell>
         </Router>
       </MantineProvider>
