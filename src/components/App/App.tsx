@@ -17,7 +17,7 @@ function App() {
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/:gameId" element={<GamePage />} />
-            <Route path="*" element={<Page404 />} /> 
+            <Route path="*" element={<Page404 />} />
           </Routes>
         </Suspense>
       </Flex>
