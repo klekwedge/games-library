@@ -8,12 +8,7 @@ import './GameList.scss';
 
 function GameList() {
   const { games, gamesLoadingStatus } = useAppSelector((state) => state.games);
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    dispatch(fetchGames({ genre: null, platform: null }));
-  }, []);
 
   const gameOnClick = (id: number) => {
     navigate(`/${id}`);
