@@ -1,7 +1,7 @@
-import { lazy, Suspense } from 'react';
-import { Flex } from '@mantine/core';
+import { lazy, Suspense, useState } from 'react';
+import { MantineProvider, ColorSchemeProvider, AppShell, Flex, ColorScheme } from '@mantine/core';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-// import Header from '../Header/Header';
+import Header from '../Header/Header';
 // import Spinner from '../Spinner/Spinner';
 
 const MainPage = lazy(() => import('../../pages/MainPage/MainPage'));
@@ -9,19 +9,29 @@ const GamePage = lazy(() => import('../../pages/GamePage/GamePage'));
 const Page404 = lazy(() => import('../../pages/Page404/Page404'));
 
 function App() {
+  const [colorScheme, setColorScheme] = useState<ColorScheme>('light');
+
+  const toggleColorScheme = (value?: ColorScheme) =>
+    setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
+
   return (
-    <Router>
-      <Flex justify="center" dir="column" m="0 auto" maw="1400px" p="20px">
-        {/* <Header /> */}
-        <Suspense fallback={<h1>Loading...</h1>}>
-          <Routes>
-            <Route path="/" element={<MainPage />} />
-            <Route path="/:gameId" element={<GamePage />} />
-            <Route path="*" element={<Page404 />} />
-          </Routes>
-        </Suspense>
-      </Flex>
-    </Router>
+    <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+      <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
+        <Router>
+          <AppShell p='0px 10px' header={<Header />}>
+            <Flex justify="center" direction="column" m="0 auto" maw="1400px">
+              <Suspense fallback={<h1>Loading...</h1>}>
+                <Routes>
+                  <Route path="/" element={<MainPage />} />
+                  <Route path="/:gameId" element={<GamePage />} />
+                  <Route path="*" element={<Page404 />} />
+                </Routes>
+              </Suspense>
+            </Flex>
+          </AppShell>
+        </Router>
+      </MantineProvider>
+    </ColorSchemeProvider>
   );
 }
 
