@@ -1,20 +1,41 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+/* eslint-disable no-param-reassign */
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import useFetch from '../hooks/useFetch';
+import { Loading } from '../types';
 
 export type GamesState = {
   games: []
+  gamesLoadingStatus: Loading
 };
 
 const initialState: GamesState = {
-  games: []
+  games: [],
+  gamesLoadingStatus: 'loading'
 };
+
+export const fetchGames = createAsyncThunk('games/fetchGames', (url: string) => {
+  const { request } = useFetch();
+  return request(url);
+});
 
 const gamesSlice = createSlice({
   name: 'games',
   initialState,
   reducers: {
-  
+
   },
   extraReducers: (builder) => {
+    builder
+      .addCase(fetchGames.pending, (state) => {
+        state.gamesLoadingStatus = 'loading';
+      })
+      .addCase(fetchGames.fulfilled, (state, action) => {
+        state.gamesLoadingStatus = 'idle';
+        state.games = action.payload.results;
+      })
+      .addCase(fetchGames.rejected, (state) => {
+        state.gamesLoadingStatus = 'error';
+      })
   },
 });
 
