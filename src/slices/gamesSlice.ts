@@ -19,13 +19,13 @@ const initialState: GamesState = {
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 
-export const fetchGames = createAsyncThunk('games/fetchGames', (genre?: string) => {
+export const fetchGames = createAsyncThunk('games/fetchGames', ({ genre, platform }: { genre: string | null, platform: string | null }) => {
   const { request } = useFetch();
-  const basicUrl = `https://free-to-play-games-database.p.rapidapi.com/api/games?rapidapi-key=${API_KEY}`;
+  let basicUrl = `https://free-to-play-games-database.p.rapidapi.com/api/games?rapidapi-key=${API_KEY}`;
 
-  if (genre) {
-    return request(`${basicUrl}&category=${genre}`);
-  }
+  basicUrl += genre ? `&category=${genre}` : ''
+  basicUrl += platform ? `&platform=${platform}` : ''
+
   return request(basicUrl);
 });
 

@@ -3,19 +3,23 @@ import { Helmet } from 'react-helmet';
 import { Flex, Select } from '@mantine/core';
 import GameList from '../../components/GamesList/GameList';
 // import GameList from '../../components/GameList/GameList';
-import { tags } from '../../data';
+import { genres, platforms } from '../../data';
 import { useAppDispatch } from '../../hooks/useRedux';
 import { fetchGames } from '../../slices/gamesSlice';
 
 function MainPage() {
-  const [tag, setTag] = useState<string | null>(null);
+  const [genre, setGenre] = useState<string | null>(null);
+  const [platform, setPlatform] = useState<string | null>(null);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (tag) {
-      dispatch(fetchGames(tag));
-    }
-  }, [tag]);
+    dispatch(
+      fetchGames({
+        genre,
+        platform,
+      }),
+    );
+  }, [genre, platform]);
 
   return (
     <>
@@ -24,7 +28,25 @@ function MainPage() {
         <title>Games Library</title>
       </Helmet>
       <Flex m="0 auto" justify="space-between" align="flex-start" direction="column">
-        <Select value={tag} onChange={setTag} data={[...tags]} size="xl" mb='40px' placeholder="Choose game genre" />
+        <Flex gap="20px">
+          <Select
+            value={genre}
+            onChange={setGenre}
+            data={[...genres]}
+            size="xl"
+            mb="40px"
+            placeholder="Choose game genre"
+          />
+          <Select
+            value={platform}
+            onChange={setPlatform}
+            data={[...platforms]}
+            size="xl"
+            mb="40px"
+            placeholder="Choose game platform"
+          />
+        </Flex>
+
         <GameList />
       </Flex>
     </>

@@ -12,7 +12,7 @@ function GameList() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(fetchGames());
+    dispatch(fetchGames({ genre: null, platform: null }));
   }, []);
 
   const gameOnClick = (id: number) => {
