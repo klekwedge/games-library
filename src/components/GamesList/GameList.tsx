@@ -1,23 +1,24 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { Flex, Skeleton, Heading, List, ListItem, Image } from '@chakra-ui/react';
 import { fetchGames } from '../../slices/gamesSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import './GameList.scss';
 
-const API_KEY = import.meta.env.VITE_API_KEY;
-
 function GameList() {
   const { games, gamesLoadingStatus } = useAppSelector((state) => state.games);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(fetchGames(`https://free-to-play-games-database.p.rapidapi.com/api/games?rapidapi-key=${API_KEY}`));
+    dispatch(fetchGames());
   }, []);
 
-  console.log(games);
+  const gameOnClick = (id: number) => {
+    navigate(`/${id}`);
+  };
 
   if (gamesLoadingStatus === 'loading') {
     return (
@@ -45,6 +46,7 @@ function GameList() {
             <List display="flex" gap="20px" flexWrap="wrap">
               {games.map((game) => (
                 <ListItem
+                  onClick={() => gameOnClick(game.id)}
                   as={motion.li}
                   className="game-item"
                   key={game.id}
@@ -61,21 +63,21 @@ function GameList() {
                     maxH="160px"
                     w="100%"
                     h="100%"
-                    mb="10px"
                   />
-                  <Heading
-                    as="h4"
-                    fontWeight="500"
-                    fontSize="16px"
-                    alignSelf="flex-start"
-                    padding="0px 10px"
-                    transition="all 0.3s ease"
-                    color="#d4d4d4"
-                    p="10px"
-                    textAlign="left"
-                  >
-                    <Link to={`/${game.id}`}>{game.title}</Link>
-                  </Heading>
+                  <Flex p="10px" flexDir="column" gap="5px" w="100%">
+                    <Heading as="h4" fontWeight="500" fontSize="20px" transition="all 0.3s ease" color="#d4d4d4">
+                      {game.title}
+                    </Heading>
+                    <Heading as="h4" fontWeight="500" fontSize="16px" color="#d4d4d4">
+                      Genre: {game.genre}
+                    </Heading>
+                    <Heading as="h4" fontWeight="500" fontSize="16px" color="#d4d4d4">
+                      Publisher: {game.publisher}
+                    </Heading>
+                    <Heading as="h4" fontWeight="500" fontSize="16px" color="#d4d4d4">
+                      Release date: {game.release_date}
+                    </Heading>
+                  </Flex>
                 </ListItem>
               ))}
             </List>
