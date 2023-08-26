@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { Flex, Skeleton, Title, Image, Pagination } from '@mantine/core';
+import { useNavigate } from 'react-router-dom';
+import { Flex, Title, Image, Pagination, Skeleton } from '@mantine/core';
 import { useAppSelector } from '../../hooks/useRedux';
 import './GameList.scss';
 
 function GameList() {
   const [page, setPage] = useState(1);
-  const { games, gamesLoadingStatus } = useAppSelector((state) => state.games);
+  const { gamesLoadingStatus, games } = useAppSelector((state) => state.games);
   const navigate = useNavigate();
 
   const gameOnClick = (id: number) => {
@@ -23,10 +23,6 @@ function GameList() {
       </Flex>
     );
   }
-
-  //   if (gamesLoadingStatus === 'error') {
-  //     return <ErrorMessage />;
-  //   }
 
   return (
     <section>
@@ -60,9 +56,7 @@ function GameList() {
             size="xl"
           />
         </Flex>
-      ) : (
-        null
-      )}
+      ) : null}
     </section>
   );
 }
