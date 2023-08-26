@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import { fetchGame } from '../../slices/gamesSlice';
 import './GamePage.scss';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import GameCard from '../../components/GameCard/GameCard';
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -58,8 +59,6 @@ function GamePage() {
   const { classes } = useStyles();
   const { gameId } = useParams();
   const { currentGame, currentGameLoadingStatus } = useAppSelector((state) => state.games);
-
-  console.log(currentGameLoadingStatus);
 
   const [info, setInfo] = useState<StatsGrid[]>([]);
   const [requirements, setRequirements] = useState<StatsGrid[]>([]);
@@ -124,44 +123,6 @@ function GamePage() {
   //   // return () => clearInterval(interval);
   // }, []);
 
-  const stats = info.map((stat) => {
-    const Icon = icons[stat.icon];
-
-    return (
-      <Paper withBorder p="md" radius="md" key={stat.title}>
-        <Group position="apart">
-          <Text size="xs" color="dimmed" className={classes.title}>
-            {stat.title}
-          </Text>
-          <Icon className={classes.icon} size="1.4rem" />
-        </Group>
-
-        <Group align="flex-end" spacing="xs" mt={25}>
-          <Text className={classes.value}>{stat.value}</Text>
-        </Group>
-      </Paper>
-    );
-  });
-
-  const minRequirements = requirements.map((stat) => {
-    const Icon = icons[stat.icon];
-
-    return (
-      <Paper withBorder p="md" radius="md" key={stat.title}>
-        <Group position="apart">
-          <Text size="xs" color="dimmed" className={classes.title}>
-            {stat.title}
-          </Text>
-          <Icon className={classes.icon} size="1.4rem" />
-        </Group>
-
-        <Group align="flex-end" spacing="xs" mt={25}>
-          <Text className={classes.value}>{stat.value}</Text>
-        </Group>
-      </Paper>
-    );
-  });
-
   return (
     <>
       <Helmet>
@@ -194,20 +155,9 @@ function GamePage() {
                 </Text>
               </Skeleton>
             </Flex>
-
-            <div className={classes.root}>
-              <Skeleton visible={currentGameLoadingStatus === 'loading'}>
-                <SimpleGrid
-                  cols={4}
-                  breakpoints={[
-                    { maxWidth: 'md', cols: 2 },
-                    { maxWidth: 'xs', cols: 1 },
-                  ]}
-                >
-                  {stats}
-                </SimpleGrid>
-              </Skeleton>
-            </div>
+            <Skeleton visible={currentGameLoadingStatus === 'loading'}>
+              <GameCard data={info} cols={4} />
+            </Skeleton>
             <Skeleton visible={currentGameLoadingStatus === 'loading'}>
               <Carousel maw="100%" mx="auto" withIndicators>
                 {currentGame.screenshots.map((screenshot) => (
@@ -221,20 +171,13 @@ function GamePage() {
             <Box p="40px 0px">
               <Skeleton visible={currentGameLoadingStatus === 'loading'}>
                 {currentGame.minimum_system_requirements && (
-                  <Title order={3} fz="30px" mb="20px">
-                    Requirements:
-                  </Title>
+                  <>
+                    <Title order={3} fz="30px" mb="20px">
+                      Requirements:
+                    </Title>
+                    <GameCard data={requirements} cols={5} />
+                  </>
                 )}
-
-                <SimpleGrid
-                  cols={5}
-                  breakpoints={[
-                    { maxWidth: 'md', cols: 2 },
-                    { maxWidth: 'xs', cols: 1 },
-                  ]}
-                >
-                  {minRequirements}
-                </SimpleGrid>
               </Skeleton>
             </Box>
           </Box>
