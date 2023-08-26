@@ -34,13 +34,17 @@ const icons = {
   publisher: AiFillInfoCircle,
   developer: AiFillInfoCircle,
   releaseDate: AiFillInfoCircle,
+  os: AiFillInfoCircle,
+  processor: AiFillInfoCircle,
+  graphics: AiFillInfoCircle,
+  memory: AiFillInfoCircle,
+  storage: AiFillInfoCircle,
 };
 
 interface StatsGrid {
   title: string;
   icon: keyof typeof icons;
   value: string;
-  diff: number;
 }
 
 function GamePage() {
@@ -49,9 +53,29 @@ function GamePage() {
   const { gameId } = useParams();
   const { currentGame } = useAppSelector((state) => state.games);
 
-  const [data, setData] = useState<StatsGrid[]>([]);
+  const [info, setInfo] = useState<StatsGrid[]>([]);
+  const [requirements, setRequirements] = useState<StatsGrid[]>([]);
 
-  const stats = data.map((stat) => {
+  const stats = info.map((stat) => {
+    const Icon = icons[stat.icon];
+
+    return (
+      <Paper withBorder p="md" radius="md" key={stat.title}>
+        <Group position="apart">
+          <Text size="xs" color="dimmed" className={classes.title}>
+            {stat.title}
+          </Text>
+          <Icon className={classes.icon} size="1.4rem" />
+        </Group>
+
+        <Group align="flex-end" spacing="xs" mt={25}>
+          <Text className={classes.value}>{stat.value}</Text>
+        </Group>
+      </Paper>
+    );
+  });
+
+  const minRequirements = requirements.map((stat) => {
     const Icon = icons[stat.icon];
 
     return (
@@ -78,11 +102,19 @@ function GamePage() {
 
   useEffect(() => {
     if (currentGame) {
-      setData([
-        { title: 'Genre', icon: 'genre', value: currentGame.genre, diff: 5 },
-        { title: 'Publisher', icon: 'publisher', value: currentGame.publisher, diff: 5 },
-        { title: 'Developer', icon: 'developer', value: currentGame.developer, diff: 5 },
-        { title: 'Release date', icon: 'releaseDate', value: currentGame.release_date, diff: 5 },
+      setInfo([
+        { title: 'Genre', icon: 'genre', value: currentGame.genre },
+        { title: 'Publisher', icon: 'publisher', value: currentGame.publisher },
+        { title: 'Developer', icon: 'developer', value: currentGame.developer },
+        { title: 'Release date', icon: 'releaseDate', value: currentGame.release_date },
+      ]);
+
+      setRequirements([
+        { title: 'OS', icon: 'os', value: currentGame.minimum_system_requirements.os },
+        { title: 'Processor', icon: 'processor', value: currentGame.minimum_system_requirements.processor },
+        { title: 'Graphics', icon: 'graphics', value: currentGame.minimum_system_requirements.graphics },
+        { title: 'Memory', icon: 'memory', value: currentGame.minimum_system_requirements.memory },
+        { title: 'Storage', icon: 'storage', value: currentGame.minimum_system_requirements.storage },
       ]);
     }
   }, [currentGame]);
@@ -127,18 +159,27 @@ function GamePage() {
             </div>
             <Carousel maw="100%" mx="auto" withIndicators>
               {currentGame.screenshots.map((screenshot) => (
-                <Carousel.Slide key={screenshot.id}>
+                <Carousel.Slide key={screenshot.id} h='100%' mah='600px'>
                   <Image src={screenshot.image} alt={currentGame.title} />
                 </Carousel.Slide>
               ))}
             </Carousel>
-            <Box>
-              <Title order={3}> Requirements:</Title>
-              {Object.entries(currentGame.minimum_system_requirements).map((requirement) => (
-                <Title order={4} key={requirement[0]}>
-                  {requirement[0][0].toUpperCase() + requirement[0].slice(1)}: {requirement[1]}
-                </Title>
-              ))}
+            <Box p='40px 0px'>
+              <Title order={3} fz='30px' mb='20px'> Requirements:</Title>
+              <SimpleGrid
+                cols={5}
+                breakpoints={[
+                  { maxWidth: 'md', cols: 2 },
+                  { maxWidth: 'xs', cols: 1 },
+                ]}
+              >
+                {minRequirements}
+                {/* {Object.entries(currentGame.minimum_system_requirements).map((requirement) => (
+                  <Title order={4} key={requirement[0]}>
+                    {requirement[0][0].toUpperCase() + requirement[0].slice(1)}: {requirement[1]}
+                  </Title>
+                ))} */}
+              </SimpleGrid>
             </Box>
           </Box>
         )}
