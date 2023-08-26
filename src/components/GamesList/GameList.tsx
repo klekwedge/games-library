@@ -18,7 +18,7 @@ function GameList() {
     return (
       <Flex gap="20px" wrap="wrap">
         {[...Array(20).keys()].map(() => (
-          <Skeleton key={uuidv4()} width="256px" h="200px" radius="10px" />
+          <Skeleton key={uuidv4()} miw="220px" style={{ flex: '1 1 23%' }} h="200px" radius="10px" />
         ))}
       </Flex>
     );
@@ -30,7 +30,7 @@ function GameList() {
 
   return (
     <section>
-      {games.length && (
+      {games.length ? (
         <Flex gap="70px" direction="column" align="center" p="20px 0px">
           <Flex display="flex" gap="20px" wrap="wrap">
             {games.slice((page - 1) * 20, page * 20).map((game) => (
@@ -60,6 +60,8 @@ function GameList() {
             size="xl"
           />
         </Flex>
+      ) : (
+        null
       )}
     </section>
   );
