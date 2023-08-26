@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { AiFillInfoCircle } from 'react-icons/ai';
+import { BsFillCpuFill } from 'react-icons/bs';
+import { FaGamepad, FaMemory } from 'react-icons/fa';
+import { FiHardDrive } from 'react-icons/fi';
+import { SiNvidia } from 'react-icons/si';
 import { Flex, Box, Text, Title, Image, createStyles, Group, Paper, SimpleGrid, rem } from '@mantine/core';
 import { Carousel } from '@mantine/carousel';
 import { Helmet } from 'react-helmet';
@@ -34,11 +38,11 @@ const icons = {
   publisher: AiFillInfoCircle,
   developer: AiFillInfoCircle,
   releaseDate: AiFillInfoCircle,
-  os: AiFillInfoCircle,
-  processor: AiFillInfoCircle,
-  graphics: AiFillInfoCircle,
-  memory: AiFillInfoCircle,
-  storage: AiFillInfoCircle,
+  os: FaGamepad,
+  processor: BsFillCpuFill,
+  graphics: SiNvidia,
+  memory: FaMemory,
+  storage: FiHardDrive,
 };
 
 interface StatsGrid {
