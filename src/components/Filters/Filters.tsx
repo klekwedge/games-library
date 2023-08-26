@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Button, Flex, Select } from '@mantine/core';
-import { genres, platforms, sorting } from '../../data';
+import { genres, platforms, sorting } from '../../filters';
 import { useAppDispatch } from '../../hooks/useRedux';
 import { fetchGames } from '../../slices/gamesSlice';
 
@@ -31,22 +31,24 @@ function Filters() {
   return (
     <Flex gap="20px">
       <Select
+        searchable
         value={genre}
         onChange={setGenre}
-        data={[...genres]}
+        data={genres}
         size="xl"
         mb="40px"
         placeholder="Choose game genre"
       />
       <Select
+        searchable
         value={platform}
         onChange={setPlatform}
-        data={[...platforms]}
+        data={platforms}
         size="xl"
         mb="40px"
         placeholder="Choose game platform"
       />
-      <Select value={sort} onChange={setSort} data={[...sorting]} size="xl" mb="40px" placeholder="Sort by" />
+      <Select searchable value={sort} onChange={setSort} data={sorting} size="xl" mb="40px" placeholder="Sort by" />
       {isButtonVisible && (
         <Button onClick={clearFilters} size="xl">
           Clear filters
