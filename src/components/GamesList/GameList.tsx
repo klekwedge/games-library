@@ -5,7 +5,6 @@ import { Flex, Skeleton, Title, Image, Pagination } from '@mantine/core';
 import { useAppSelector } from '../../hooks/useRedux';
 import './GameList.scss';
 
-
 function GameList() {
   const [page, setPage] = useState(1);
   const { games, gamesLoadingStatus } = useAppSelector((state) => state.games);
@@ -48,7 +47,7 @@ function GameList() {
                     Publisher: {game.publisher}
                   </Title>
                   <Title order={4} fw="500" fz="16px" color="#d4d4d4">
-                    Release date: {game.release_date}
+                    Release date: {new Date(game.release_date).toLocaleDateString()}
                   </Title>
                 </Flex>
               </Flex>

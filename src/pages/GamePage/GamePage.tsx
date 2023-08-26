@@ -106,7 +106,7 @@ function GamePage() {
         { title: 'Genre', icon: 'genre', value: currentGame.genre },
         { title: 'Publisher', icon: 'publisher', value: currentGame.publisher },
         { title: 'Developer', icon: 'developer', value: currentGame.developer },
-        { title: 'Release date', icon: 'releaseDate', value: currentGame.release_date },
+        { title: 'Release date', icon: 'releaseDate', value: new Date(currentGame.release_date).toLocaleDateString() },
       ]);
 
       setRequirements([
@@ -159,13 +159,16 @@ function GamePage() {
             </div>
             <Carousel maw="100%" mx="auto" withIndicators>
               {currentGame.screenshots.map((screenshot) => (
-                <Carousel.Slide key={screenshot.id} h='100%' mah='600px'>
+                <Carousel.Slide key={screenshot.id} h="100%" mah="600px">
                   <Image src={screenshot.image} alt={currentGame.title} />
                 </Carousel.Slide>
               ))}
             </Carousel>
-            <Box p='40px 0px'>
-              <Title order={3} fz='30px' mb='20px'> Requirements:</Title>
+            <Box p="40px 0px">
+              <Title order={3} fz="30px" mb="20px">
+                {' '}
+                Requirements:
+              </Title>
               <SimpleGrid
                 cols={5}
                 breakpoints={[
@@ -174,11 +177,6 @@ function GamePage() {
                 ]}
               >
                 {minRequirements}
-                {/* {Object.entries(currentGame.minimum_system_requirements).map((requirement) => (
-                  <Title order={4} key={requirement[0]}>
-                    {requirement[0][0].toUpperCase() + requirement[0].slice(1)}: {requirement[1]}
-                  </Title>
-                ))} */}
               </SimpleGrid>
             </Box>
           </Box>
