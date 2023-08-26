@@ -28,7 +28,7 @@ export interface ICurrentGame {
     developer: string;
     release_date: string;
     freetogame_profile_url: string;
-    minimum_system_requirements: ISystemRequirements
+    minimum_system_requirements: ISystemRequirements | undefined
     screenshots: IScreenshots[]
 }
 

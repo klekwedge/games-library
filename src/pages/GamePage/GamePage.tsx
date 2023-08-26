@@ -113,13 +113,15 @@ function GamePage() {
         { title: 'Release date', icon: 'releaseDate', value: new Date(currentGame.release_date).toLocaleDateString() },
       ]);
 
-      setRequirements([
-        { title: 'OS', icon: 'os', value: currentGame.minimum_system_requirements.os },
-        { title: 'Processor', icon: 'processor', value: currentGame.minimum_system_requirements.processor },
-        { title: 'Graphics', icon: 'graphics', value: currentGame.minimum_system_requirements.graphics },
-        { title: 'Memory', icon: 'memory', value: currentGame.minimum_system_requirements.memory },
-        { title: 'Storage', icon: 'storage', value: currentGame.minimum_system_requirements.storage },
-      ]);
+      if (currentGame.minimum_system_requirements) {
+        setRequirements([
+          { title: 'OS', icon: 'os', value: currentGame.minimum_system_requirements.os },
+          { title: 'Processor', icon: 'processor', value: currentGame.minimum_system_requirements.processor },
+          { title: 'Graphics', icon: 'graphics', value: currentGame.minimum_system_requirements.graphics },
+          { title: 'Memory', icon: 'memory', value: currentGame.minimum_system_requirements.memory },
+          { title: 'Storage', icon: 'storage', value: currentGame.minimum_system_requirements.storage },
+        ]);
+      }
     }
   }, [currentGame]);
 
@@ -169,10 +171,12 @@ function GamePage() {
               ))}
             </Carousel>
             <Box p="40px 0px">
-              <Title order={3} fz="30px" mb="20px">
-                {' '}
-                Requirements:
-              </Title>
+              {currentGame.minimum_system_requirements && (
+                <Title order={3} fz="30px" mb="20px">
+                  Requirements:
+                </Title>
+              )}
+
               <SimpleGrid
                 cols={5}
                 breakpoints={[
