@@ -7,14 +7,20 @@ export type GamesState = {
   games: IGame[]
   gamesLoadingStatus: Loading
   currentGame: ICurrentGame | null;
-  currentGameLoadingStatus: Loading
+  currentGameLoadingStatus: Loading;
+  genre: string | null;
+  platform: string | null;
+  sort: string | null;
 };
 
 const initialState: GamesState = {
   games: [],
   gamesLoadingStatus: 'loading',
   currentGame: null,
-  currentGameLoadingStatus: 'loading'
+  currentGameLoadingStatus: 'loading',
+  genre: null,
+  platform: null,
+  sort: null,
 };
 
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -45,6 +51,20 @@ const gamesSlice = createSlice({
     },
     resetCurrentGame: (state) => {
       state.currentGame = null;
+    },
+    setGenre: (state, action) => {
+      state.genre = action.payload;
+    },
+    setPlatform: (state, action) => {
+      state.platform = action.payload;
+    },
+    setSort: (state, action) => {
+      state.sort = action.payload;
+    },
+    clearFilters: (state) => {
+      state.genre = null
+      state.platform = null
+      state.sort = null
     }
   },
   extraReducers: (builder) => {
@@ -74,5 +94,5 @@ const gamesSlice = createSlice({
 
 
 const { actions, reducer } = gamesSlice;
-export const { setCurrentGame, resetCurrentGame  } = actions;
+export const { setCurrentGame, resetCurrentGame, setGenre, setPlatform, setSort, clearFilters } = actions;
 export default reducer;
