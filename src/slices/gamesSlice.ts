@@ -11,6 +11,7 @@ export type GamesState = {
   genre: string | null;
   platform: string | null;
   sort: string | null;
+  page: number;
 };
 
 const initialState: GamesState = {
@@ -21,6 +22,7 @@ const initialState: GamesState = {
   genre: null,
   platform: null,
   sort: null,
+  page: 1,
 };
 
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -65,7 +67,10 @@ const gamesSlice = createSlice({
       state.genre = null
       state.platform = null
       state.sort = null
-    }
+    },
+    setPage: (state, action) => {
+      state.page = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -94,5 +99,5 @@ const gamesSlice = createSlice({
 
 
 const { actions, reducer } = gamesSlice;
-export const { setCurrentGame, resetCurrentGame, setGenre, setPlatform, setSort, clearFilters } = actions;
+export const { setCurrentGame, resetCurrentGame, setGenre, setPlatform, setSort, clearFilters, setPage } = actions;
 export default reducer;

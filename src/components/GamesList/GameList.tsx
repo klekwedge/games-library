@@ -1,13 +1,12 @@
-import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Flex, Pagination, Skeleton } from '@mantine/core';
-import { useAppSelector } from '../../hooks/useRedux';
+import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import GameCard from '../GameCard/GameCard';
+import { setPage } from '../../slices/gamesSlice';
 
 function GameList() {
-  const [page, setPage] = useState(1);
-  const { gamesLoadingStatus, games } = useAppSelector((state) => state.games);
-
+  const dispatch = useAppDispatch();
+  const { gamesLoadingStatus, games, page } = useAppSelector((state) => state.games);
 
   if (gamesLoadingStatus === 'loading') {
     return (
@@ -25,11 +24,11 @@ function GameList() {
         <Flex gap="70px" direction="column" align="center" p="20px 0px">
           <Flex display="flex" gap="20px" wrap="wrap">
             {games.slice((page - 1) * 20, page * 20).map((game) => (
-              <GameCard game={game} key={game.id}/>
+              <GameCard game={game} key={game.id} />
             ))}
           </Flex>
           <Pagination
-            onChange={(value) => setPage(value)}
+            onChange={(value) => dispatch(setPage(value))}
             value={page}
             total={Math.ceil(games.length / 20)}
             size="xl"

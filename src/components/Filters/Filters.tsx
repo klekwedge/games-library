@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Button, Flex, Select } from '@mantine/core';
 import { genres, platforms, sorting } from '../../filters';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
-import { clearFilters, fetchGames, setGenre, setPlatform, setSort } from '../../slices/gamesSlice';
+import { clearFilters, fetchGames, setGenre, setPage, setPlatform, setSort } from '../../slices/gamesSlice';
 
 function Filters() {
   const { genre, platform, sort } = useAppSelector((state) => state.games);
@@ -15,6 +15,7 @@ function Filters() {
   };
 
   useEffect(() => {
+    dispatch(setPage(1));
     dispatch(
       fetchGames({
         genre,
