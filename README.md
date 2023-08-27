@@ -38,8 +38,9 @@
 - React
 - TypeScript
 - Redux Toolkit
-- SCSS
 - Mantine
+- SCSS
+
 
 ## Автор
 

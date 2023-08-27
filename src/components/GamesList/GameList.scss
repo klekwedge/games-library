@@ -1,10 +1,9 @@
-.game-item {
+.game__item {
   display: flex;
   flex-direction: column;
   align-items: center;
   min-width: 280px;
   transition: all 0.3s ease;
-  background: #18181b;
   flex: 1 1 23%;
   border-radius: 8px;
   cursor: pointer;

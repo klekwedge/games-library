@@ -29,7 +29,7 @@ function Filters() {
   }, [genre, platform, sort]);
 
   return (
-    <Flex gap="20px" wrap="wrap" mb="40px">
+    <Flex gap="20px" wrap="wrap" mb="20px">
       <Select searchable value={genre} onChange={setGenre} data={genres} size="xl" placeholder="Choose genre" />
       <Select
         searchable
