@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Button, Flex, Select } from '@mantine/core';
 import { genres, platforms, sorting } from '../../filters';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';

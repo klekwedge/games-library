@@ -1,4 +1,4 @@
-import { Flex, Title, ActionIcon, useMantineColorScheme } from '@mantine/core';
+import { Flex, ActionIcon, useMantineColorScheme } from '@mantine/core';
 import { IoGameController } from 'react-icons/io5';
 import { BsSunFill, BsMoonFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';

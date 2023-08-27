@@ -115,13 +115,15 @@ function GamePage() {
               <GameInfo data={info} cols={4} />
             </Skeleton>
             <Skeleton visible={currentGameLoadingStatus === 'loading'}>
-              <Carousel maw="100%" mx="auto" withIndicators>
-                {currentGame.screenshots.map((screenshot) => (
-                  <Carousel.Slide key={screenshot.id} h="100%" mah="600px">
-                    <Image src={screenshot.image} alt={currentGame.title} />
-                  </Carousel.Slide>
-                ))}
-              </Carousel>
+              {currentGame.screenshots.length ? (
+                <Carousel maw="100%" mx="auto" withIndicators>
+                  {currentGame.screenshots.map((screenshot) => (
+                    <Carousel.Slide key={screenshot.id} h="100%" mah="600px">
+                      <Image src={screenshot.image} alt={currentGame.title} />
+                    </Carousel.Slide>
+                  ))}
+                </Carousel>
+              ) : null}
             </Skeleton>
 
             <Box p="40px 0px">
