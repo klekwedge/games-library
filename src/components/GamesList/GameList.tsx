@@ -31,7 +31,7 @@ function GameList() {
           <Flex display="flex" gap="20px" wrap="wrap">
             {games.slice((page - 1) * 20, page * 20).map((game) => (
               <Flex onClick={() => gameOnClick(game.id)} className="game-item" key={game.id}>
-                <Image src={game.thumbnail} alt={game.title} fit="cover" maw="100%" mah="160px" w="100%" h="100%" />
+                <Image src={game.thumbnail} alt={game.title} fit="cover" maw="100%" w="100%" />
                 <Flex p="20px" direction="column" gap="5px" w="100%">
                   <Title order={4} fw="500" fz="20px" color="#d4d4d4">
                     {game.title}

@@ -29,26 +29,17 @@ function Filters() {
   }, [genre, platform, sort]);
 
   return (
-    <Flex gap="20px">
-      <Select
-        searchable
-        value={genre}
-        onChange={setGenre}
-        data={genres}
-        size="xl"
-        mb="40px"
-        placeholder="Choose game genre"
-      />
+    <Flex gap="20px" wrap="wrap" mb="40px">
+      <Select searchable value={genre} onChange={setGenre} data={genres} size="xl" placeholder="Choose genre" />
       <Select
         searchable
         value={platform}
         onChange={setPlatform}
         data={platforms}
         size="xl"
-        mb="40px"
-        placeholder="Choose game platform"
+        placeholder="Choose platform"
       />
-      <Select searchable value={sort} onChange={setSort} data={sorting} size="xl" mb="40px" placeholder="Sort by" />
+      <Select searchable value={sort} onChange={setSort} data={sorting} size="xl" placeholder="Sort by" />
       {isButtonVisible && (
         <Button onClick={clearFilters} size="xl">
           Clear filters
