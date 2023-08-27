@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import { fetchGame } from '../../slices/gamesSlice';
 import './GamePage.scss';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
-import GameCard, { StatsGrid } from '../../components/GameCard/GameCard';
+import GameInfo, { StatsGrid } from '../../components/GameInfo/GameInfo';
 
 function GamePage() {
   const dispatch = useAppDispatch();
@@ -109,7 +109,7 @@ function GamePage() {
               </Skeleton>
             </Flex>
             <Skeleton visible={currentGameLoadingStatus === 'loading'}>
-              <GameCard data={info} cols={4} />
+              <GameInfo data={info} cols={4} />
             </Skeleton>
             <Skeleton visible={currentGameLoadingStatus === 'loading'}>
               <Carousel maw="100%" mx="auto" withIndicators>
@@ -128,7 +128,7 @@ function GamePage() {
                     <Title order={3} fz="30px" mb="20px">
                       Requirements:
                     </Title>
-                    <GameCard data={requirements} cols={5} />
+                    <GameInfo data={requirements} cols={5} />
                   </>
                 )}
               </Skeleton>
