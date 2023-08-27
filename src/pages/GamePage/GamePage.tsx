@@ -5,7 +5,7 @@ import { Flex, Box, Text, Title, Image, Skeleton } from '@mantine/core';
 import { Carousel } from '@mantine/carousel';
 import { Helmet } from 'react-helmet';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
-import { fetchGame, resetCurrentGame, setCurrentGame } from '../../slices/gamesSlice';
+import { fetchGame, setCurrentGame } from '../../slices/gamesSlice';
 import './GamePage.scss';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import GameInfo, { StatsGrid } from '../../components/GameInfo/GameInfo';
@@ -28,33 +28,30 @@ function GamePage() {
     if (gameId) {
       const findEl = isGameLocal(gameId);
       if (findEl) {
-        // console.log('LOCAL');
-        dispatch(setCurrentGame(findEl));
+        const currentDate = new Date(JSON.parse(JSON.stringify(new Date())));
+        const date = new Date(findEl.timestamp);
+        const diff = Math.abs(Math.round(date.getTime() - currentDate.getTime()));
+
+        if (diff > 5 * 60 * 1000) {
+          const oldLocalGames = Object.values(JSON.parse(localStorage.getItem('games') || '{}')) as ILocalGame[];
+          localStorage.setItem('games', JSON.stringify([...oldLocalGames.filter((game) => game.id !== +gameId)]));
+          dispatch(fetchGame(+gameId));
+        } else {
+          dispatch(setCurrentGame(findEl));
+        }
       } else {
-        // console.log('REQUEST');
         dispatch(fetchGame(+gameId));
       }
-
-      // // const currentDate = new Date();
-      // // const interval = setInterval(() => {
-      // // const date = new Date();
-      // // const diff = (date.getTime() - currentDate.getTime()) / 1000 / 60;
-      // //   console.log(Math.abs(Math.round(diff)));
-      // // }, 60000);
-      // // return () => clearInterval(interval);
     }
   }, []);
 
-  // 3
   useEffect(() => {
     if (gameId) {
-      console.log(currentGame, gameId);
-
       const findEl = isGameLocal(gameId);
 
       if (!findEl && currentGame) {
         const oldLocalGames = Object.values(JSON.parse(localStorage.getItem('games') || '{}')) as ILocalGame[];
-        localStorage.setItem('games', JSON.stringify([...oldLocalGames, currentGame]));
+        localStorage.setItem('games', JSON.stringify([...oldLocalGames, { ...currentGame, timestamp: new Date() }]));
       }
     }
   }, [currentGame]);
