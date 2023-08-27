@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { BsArrowLeft } from 'react-icons/bs';
 import { Flex, Box, Text, Title, Image, Skeleton } from '@mantine/core';
 import { Carousel } from '@mantine/carousel';
 import { Helmet } from 'react-helmet';
@@ -86,25 +87,25 @@ function GamePage() {
       <main>
         {currentGame && (
           <Box>
-            <Skeleton visible={currentGameLoadingStatus === 'loading'} maw="300px" height="40px" mb="30px" ml="auto">
+            <Title order={2} fz="24px" mb='10px'>
+              <Link to="/" style={{ color: 'inherit', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <BsArrowLeft size="50px" />
+                Go back to the main page
+              </Link>
+            </Title>
+
+            <Skeleton visible={currentGameLoadingStatus === 'loading'} height="40px" mb="30px" ml="auto">
               <Title order={1} align="right" fz="38px" mb="30px">
                 {currentGame.title}
               </Title>
             </Skeleton>
             <Flex className="game__main" justify="space-between" gap="50px" mb="30px">
               <Skeleton className="game__image" visible={currentGameLoadingStatus === 'loading'} maw="900px">
-                <Image
-                  src={currentGame.thumbnail}
-                  alt={currentGame.title}
-                  fit="cover"
-                  w="100%"
-                />
+                <Image src={currentGame.thumbnail} alt={currentGame.title} fit="cover" w="100%" />
               </Skeleton>
 
               <Skeleton className="game__descr" visible={currentGameLoadingStatus === 'loading'} maw="400px">
-                <Text fz="xl" >
-                  {currentGame.description}
-                </Text>
+                <Text fz="xl">{currentGame.description}</Text>
               </Skeleton>
             </Flex>
             <Skeleton visible={currentGameLoadingStatus === 'loading'}>
