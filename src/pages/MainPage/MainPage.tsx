@@ -1,12 +1,19 @@
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { Flex } from '@mantine/core';
 import GameList from '../../components/GamesList/GameList';
 import Filters from '../../components/Filters/Filters';
-import { useAppSelector } from '../../hooks/useRedux';
+import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import { resetCurrentGame } from '../../slices/gamesSlice';
 
 function MainPage() {
+  const dispatch = useAppDispatch();
   const { gamesLoadingStatus } = useAppSelector((state) => state.games);
+
+  useEffect(() => {
+    dispatch(resetCurrentGame());
+  }, []);
 
   if (gamesLoadingStatus === 'error') {
     return <ErrorMessage />;

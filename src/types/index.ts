@@ -14,6 +14,10 @@ export interface IGame {
     freetogame_profile_url: string;
 }
 
+export interface ILocalGame extends IGame {
+    timestamp: Date
+}
+
 export interface ICurrentGame {
     id: number;
     title: string;

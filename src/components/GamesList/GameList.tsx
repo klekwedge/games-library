@@ -25,7 +25,7 @@ function GameList() {
         <Flex gap="70px" direction="column" align="center" p="20px 0px">
           <Flex display="flex" gap="20px" wrap="wrap">
             {games.slice((page - 1) * 20, page * 20).map((game) => (
-              <GameCard game={game}/>
+              <GameCard game={game} key={game.id}/>
             ))}
           </Flex>
           <Pagination

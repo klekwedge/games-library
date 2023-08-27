@@ -39,7 +39,13 @@ const gamesSlice = createSlice({
   name: 'games',
   initialState,
   reducers: {
-
+    setCurrentGame: (state, action) => {
+      state.currentGame = action.payload
+      state.currentGameLoadingStatus = 'idle';
+    },
+    resetCurrentGame: (state) => {
+      state.currentGame = null;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -68,5 +74,5 @@ const gamesSlice = createSlice({
 
 
 const { actions, reducer } = gamesSlice;
-// export const {  } = actions;
+export const { setCurrentGame, resetCurrentGame  } = actions;
 export default reducer;

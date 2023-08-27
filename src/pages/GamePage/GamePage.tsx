@@ -5,10 +5,11 @@ import { Flex, Box, Text, Title, Image, Skeleton } from '@mantine/core';
 import { Carousel } from '@mantine/carousel';
 import { Helmet } from 'react-helmet';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
-import { fetchGame } from '../../slices/gamesSlice';
+import { fetchGame, resetCurrentGame, setCurrentGame } from '../../slices/gamesSlice';
 import './GamePage.scss';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import GameInfo, { StatsGrid } from '../../components/GameInfo/GameInfo';
+import { ILocalGame } from '../../types';
 
 function GamePage() {
   const dispatch = useAppDispatch();
@@ -18,11 +19,45 @@ function GamePage() {
   const [info, setInfo] = useState<StatsGrid[]>([]);
   const [requirements, setRequirements] = useState<StatsGrid[]>([]);
 
+  const isGameLocal = (id: string) => {
+    const oldLocalGames = Object.values(JSON.parse(localStorage.getItem('games') || '{}')) as ILocalGame[];
+    return oldLocalGames.find((game) => game.id === +id);
+  };
+
   useEffect(() => {
     if (gameId) {
-      dispatch(fetchGame(+gameId));
+      const findEl = isGameLocal(gameId);
+      if (findEl) {
+        // console.log('LOCAL');
+        dispatch(setCurrentGame(findEl));
+      } else {
+        // console.log('REQUEST');
+        dispatch(fetchGame(+gameId));
+      }
+
+      // // const currentDate = new Date();
+      // // const interval = setInterval(() => {
+      // // const date = new Date();
+      // // const diff = (date.getTime() - currentDate.getTime()) / 1000 / 60;
+      // //   console.log(Math.abs(Math.round(diff)));
+      // // }, 60000);
+      // // return () => clearInterval(interval);
     }
   }, []);
+
+  // 3
+  useEffect(() => {
+    if (gameId) {
+      console.log(currentGame, gameId);
+
+      const findEl = isGameLocal(gameId);
+
+      if (!findEl && currentGame) {
+        const oldLocalGames = Object.values(JSON.parse(localStorage.getItem('games') || '{}')) as ILocalGame[];
+        localStorage.setItem('games', JSON.stringify([...oldLocalGames, currentGame]));
+      }
+    }
+  }, [currentGame]);
 
   useEffect(() => {
     if (currentGame) {
@@ -49,35 +84,6 @@ function GamePage() {
     return <ErrorMessage />;
   }
 
-  // useEffect(() => {
-  //   // const currentDate = new Date();
-
-  //   // localStorage.setItem(
-  //   //   'games',
-  //   //   JSON.stringify([
-  //   //     {
-  //   //       fff: 12,
-  //   //       f: 'fefw',
-  //   //     },
-  //   //   ]),
-  //   // );
-
-  //   // const games = localStorage.getItem('games');
-
-  //   // if (games) {
-  //   //   console.log(JSON.parse(games));
-  //   // }
-
-  //   // const interval = setInterval(() => {
-  //   //   const date = new Date();
-
-  //   //   const diff = (date.getTime() - currentDate.getTime()) / 1000 / 60;
-
-  //   //   console.log(Math.abs(Math.round(diff)));
-  //   // }, 60000);
-  //   // return () => clearInterval(interval);
-  // }, []);
-
   return (
     <>
       <Helmet>
@@ -87,7 +93,7 @@ function GamePage() {
       <main>
         {currentGame && (
           <Box>
-            <Title order={2} fz="24px" mb='10px'>
+            <Title order={2} fz="24px" mb="10px">
               <Link to="/" style={{ color: 'inherit', display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <BsArrowLeft size="50px" />
                 Go back to the main page
