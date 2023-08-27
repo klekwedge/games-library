@@ -1,7 +1,16 @@
-.game__image {
-  flex: 1 1 50%;
+.game__image,
+.game__descr {
+  flex: 1 1 45%;
 }
 
-.game__descr {
-  flex: 1 1 50%;
+@media (max-width: 1440px) {
+  .game__main {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .game__image,
+  .game__descr {
+    min-width: 100%;
+  }
 }

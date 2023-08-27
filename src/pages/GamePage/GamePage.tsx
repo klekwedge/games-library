@@ -1,62 +1,16 @@
 import { useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { useParams } from 'react-router-dom';
-import { AiFillInfoCircle } from 'react-icons/ai';
-import { BsFillCpuFill } from 'react-icons/bs';
-import { FaGamepad, FaMemory } from 'react-icons/fa';
-import { FiHardDrive } from 'react-icons/fi';
-import { SiNvidia } from 'react-icons/si';
-import { Flex, Box, Text, Title, Image, createStyles, Group, Paper, SimpleGrid, rem, Skeleton } from '@mantine/core';
+import { Flex, Box, Text, Title, Image, Skeleton } from '@mantine/core';
 import { Carousel } from '@mantine/carousel';
 import { Helmet } from 'react-helmet';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import { fetchGame } from '../../slices/gamesSlice';
 import './GamePage.scss';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
-import GameCard from '../../components/GameCard/GameCard';
-
-const useStyles = createStyles((theme) => ({
-  root: {
-    marginBottom: '40px',
-  },
-
-  value: {
-    fontSize: rem(22),
-    fontWeight: 700,
-    lineHeight: 1,
-  },
-
-  icon: {
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4],
-  },
-
-  title: {
-    fontWeight: 700,
-    fontSize: rem(24),
-  },
-}));
-
-const icons = {
-  genre: AiFillInfoCircle,
-  publisher: AiFillInfoCircle,
-  developer: AiFillInfoCircle,
-  releaseDate: AiFillInfoCircle,
-  os: FaGamepad,
-  processor: BsFillCpuFill,
-  graphics: SiNvidia,
-  memory: FaMemory,
-  storage: FiHardDrive,
-};
-
-interface StatsGrid {
-  title: string;
-  icon: keyof typeof icons;
-  value: string;
-}
+import GameCard, { StatsGrid } from '../../components/GameCard/GameCard';
 
 function GamePage() {
   const dispatch = useAppDispatch();
-  const { classes } = useStyles();
   const { gameId } = useParams();
   const { currentGame, currentGameLoadingStatus } = useAppSelector((state) => state.games);
 
@@ -132,25 +86,23 @@ function GamePage() {
       <main>
         {currentGame && (
           <Box>
-            <Skeleton visible={currentGameLoadingStatus === 'loading'} maw="200px" height="40px" mb="30px" ml="auto">
+            <Skeleton visible={currentGameLoadingStatus === 'loading'} maw="300px" height="40px" mb="30px" ml="auto">
               <Title order={1} align="right" fz="38px" mb="30px">
                 {currentGame.title}
               </Title>
             </Skeleton>
-            <Flex justify="space-between" gap="50px" mb="30px">
-              <Skeleton visible={currentGameLoadingStatus === 'loading'} maw="900px">
+            <Flex className="game__main" justify="space-between" gap="50px" mb="30px">
+              <Skeleton className="game__image" visible={currentGameLoadingStatus === 'loading'} maw="900px">
                 <Image
-                  className="game__image"
                   src={currentGame.thumbnail}
                   alt={currentGame.title}
                   fit="cover"
                   w="100%"
-                  h="100%"
                 />
               </Skeleton>
 
-              <Skeleton visible={currentGameLoadingStatus === 'loading'} maw="400px" height="100%">
-                <Text fz="xl" className="game__descr">
+              <Skeleton className="game__descr" visible={currentGameLoadingStatus === 'loading'} maw="400px">
+                <Text fz="xl" >
                   {currentGame.description}
                 </Text>
               </Skeleton>

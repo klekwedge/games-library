@@ -39,14 +39,13 @@ const icons = {
   storage: FiHardDrive,
 };
 
-interface StatsGrid {
+export interface StatsGrid {
   title: string;
   icon: keyof typeof icons;
   value: string;
 }
 
 function GameCard({ data, cols }: { data: StatsGrid[]; cols: number }) {
-  const { currentGameLoadingStatus } = useAppSelector((state) => state.games);
   const { classes } = useStyles();
 
   const cards = data.map((stat) => {
