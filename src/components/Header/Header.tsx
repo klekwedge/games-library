@@ -1,4 +1,5 @@
 import { Flex, Title, ActionIcon, useMantineColorScheme } from '@mantine/core';
+import { IoGameController } from 'react-icons/io5';
 import { BsSunFill, BsMoonFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 
@@ -7,11 +8,9 @@ function Header() {
 
   return (
     <Flex justify="space-between" align="center" m="0 auto" p="20px 0px">
-      <Title order={2}>
-        <Link to="/" style={{ color: 'inherit' }}>
-          Main Page
-        </Link>
-      </Title>
+      <Link to="/" style={{ color: 'inherit' }}>
+        <IoGameController size="50px" title="Go to main page" />
+      </Link>
       <ActionIcon
         variant="outline"
         color={colorScheme === 'dark' ? 'yellow' : 'blue'}
