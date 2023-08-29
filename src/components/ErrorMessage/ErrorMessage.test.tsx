@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import ErrorMessage from './ErrorMessage'; // Подставьте путь к вашему компоненту
+import ErrorMessage from './ErrorMessage';
 
 describe('ErrorMessage component', () => {
   it('ErrorMessage renders without errors', () => {

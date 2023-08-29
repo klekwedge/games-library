@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import { Provider } from 'react-redux'; // Предполагая, что вы используете Redux
+import { Provider } from 'react-redux';
 import GameList from './GameList';
-import store from '../../store/store'; // Замените на вашу конфигурацию Redux Store
+import store from '../../store/store';
 
 describe('GameList', () => {
   it('renders loading skeleton when games are loading', () => {
