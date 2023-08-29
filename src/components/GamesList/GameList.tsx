@@ -12,7 +12,14 @@ function GameList() {
     return (
       <Flex gap="20px" wrap="wrap">
         {[...Array(20).keys()].map(() => (
-          <Skeleton key={uuidv4()} miw="220px" style={{ flex: '1 1 23%' }} h="200px" radius="10px" />
+          <Skeleton
+            data-testid="skeleton"
+            key={uuidv4()}
+            miw="220px"
+            style={{ flex: '1 1 23%' }}
+            h="200px"
+            radius="10px"
+          />
         ))}
       </Flex>
     );
@@ -28,6 +35,7 @@ function GameList() {
             ))}
           </Flex>
           <Pagination
+            data-testid="pagination"
             onChange={(value) => dispatch(setPage(value))}
             value={page}
             total={Math.ceil(games.length / 20)}
