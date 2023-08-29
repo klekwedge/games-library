@@ -11,7 +11,7 @@ function GameCard({ game }: { game: IGame }) {
   };
 
   return (
-    <Card shadow="sm" radius="md" withBorder onClick={() => gameOnClick(game.id)} className="game__item" key={game.id}>
+    <Card className="game__item"  shadow="sm" radius="md" withBorder onClick={() => gameOnClick(game.id)} key={game.id}>
       <Image src={game.thumbnail} alt={game.title} fit="cover" maw="100%" w="100%" />
       <Flex p="10px 20px 20px" direction="column" gap="5px" w="100%">
         <Title order={4} fw="500" fz="20px">
