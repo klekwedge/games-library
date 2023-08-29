@@ -69,6 +69,7 @@ function GameInfo({ data, cols }: { data: StatsGrid[]; cols: number }) {
   return (
     <div className={classes.root}>
         <SimpleGrid
+        data-testid='article'
           cols={cols}
           breakpoints={[
             { maxWidth: 'md', cols: 2 },
