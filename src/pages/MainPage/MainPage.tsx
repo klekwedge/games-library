@@ -22,7 +22,7 @@ function MainPage() {
   return (
     <>
       <Helmet>
-        <meta name="description" content="Game Shop" />
+        <meta name="description" content="Game Library" />
         <title>Games Library</title>
       </Helmet>
       <Flex m="0 auto" justify="space-between" align="flex-start" direction="column">
