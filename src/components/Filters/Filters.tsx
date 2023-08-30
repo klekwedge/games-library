@@ -1,11 +1,20 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Flex, Select } from '@mantine/core';
 import { genres, platforms, sorting } from '../../filters';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
-import { clearFilters, fetchGames, setGenre, setPage, setPlatform, setSort } from '../../slices/gamesSlice';
+import {
+  clearFilters,
+  fetchGames,
+  incAttemptsGetGames,
+  setGenre,
+  setPage,
+  setPlatform,
+  setSort,
+} from '../../slices/gamesSlice';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 function Filters() {
-  const { genre, platform, sort } = useAppSelector((state) => state.games);
+  const { genre, platform, sort, gamesLoadingStatus, attemptsGetGames } = useAppSelector((state) => state.games);
   const dispatch = useAppDispatch();
 
   const isButtonVisible = genre || platform || sort;
@@ -14,7 +23,8 @@ function Filters() {
     dispatch(clearFilters());
   };
 
-  useEffect(() => {
+  const request = () => {
+    dispatch(incAttemptsGetGames());
     dispatch(setPage(1));
     dispatch(
       fetchGames({
@@ -23,7 +33,15 @@ function Filters() {
         sort,
       }),
     );
+  };
+
+  useEffect(() => {
+    request();
   }, [genre, platform, sort]);
+
+  if (gamesLoadingStatus === 'error') {
+    return <ErrorMessage attempts={attemptsGetGames} reRequest={request} />;
+  }
 
   return (
     <Flex gap="20px" wrap="wrap" mb="20px">

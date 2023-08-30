@@ -1,10 +1,17 @@
-import { Flex, Title } from '@mantine/core';
+import { Button, Flex, Title } from '@mantine/core';
 import './ErrorMessage.scss';
 
-function ErrorMessage() {
+interface ErrorMessageProps {
+  reRequest: () => void;
+  attempts: number;
+}
+
+function ErrorMessage({ reRequest, attempts }: ErrorMessageProps) {
+
+
   return (
-    <Flex w="800px" gap="10px" m='0 auto' direction="column" data-testid='error-message'>
-      <svg id="500_Bill" viewBox="-8.5 9.5 560 250" data-testid='error-svg'>
+    <Flex w="800px" gap="10px" m="0 auto" direction="column" data-testid="error-message">
+      <svg id="500_Bill" viewBox="-8.5 9.5 560 250" data-testid="error-svg">
         <defs>
           <clipPath id="circle-mask">
             <path d="M242.7 52.3c-45.4 0-82.3 36.9-82.3 82.3s36.9 82.3 82.3 82.3S325 180 325 134.6c0-45.3-36.9-82.3-82.3-82.3zm186 0c-45.4 0-82.3 36.9-82.3 82.3s36.9 82.3 82.3 82.3S511 180 511 134.6c0-45.3-36.9-82.3-82.3-82.3z" />
@@ -435,9 +442,17 @@ function ErrorMessage() {
           />
         </g>
       </svg>
-      <Title order={2} align="center">
+      <Title order={2} align="center" mb="20px">
         Woops! Something went wrong
       </Title>
+      <Flex justify="center" direction="column" gap="10px">
+        <Button disabled={attempts === 4} m="0 auto" maw="160px" onClick={reRequest}>
+          Request again
+        </Button>
+        <Title order={3} fz="18px" align="center">
+          Remaining attempts: {4 - attempts}
+        </Title>
+      </Flex>
     </Flex>
   );
 }

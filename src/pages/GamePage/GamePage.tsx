@@ -5,16 +5,16 @@ import { Flex, Box, Text, Title, Image, Skeleton } from '@mantine/core';
 import { Carousel } from '@mantine/carousel';
 import { Helmet } from 'react-helmet';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
-import { fetchGame, setCurrentGame } from '../../slices/gamesSlice';
-import './GamePage.scss';
+import { fetchGame, incAttemptsGetGame, resetAttemptsGetGame, setCurrentGame } from '../../slices/gamesSlice';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import GameInfo, { StatsGrid } from '../../components/GameInfo/GameInfo';
 import { ILocalGame } from '../../types';
+import './GamePage.scss';
 
 function GamePage() {
   const dispatch = useAppDispatch();
   const { gameId } = useParams();
-  const { currentGame, currentGameLoadingStatus } = useAppSelector((state) => state.games);
+  const { currentGame, currentGameLoadingStatus, attemptsGetGame } = useAppSelector((state) => state.games);
 
   const [info, setInfo] = useState<StatsGrid[]>([]);
   const [requirements, setRequirements] = useState<StatsGrid[]>([]);
@@ -24,8 +24,9 @@ function GamePage() {
     return oldLocalGames.find((game) => game.id === +id);
   };
 
-  useEffect(() => {
+  const request = () => {
     if (gameId) {
+      dispatch(incAttemptsGetGame());
       const findEl = isGameLocal(gameId);
       if (findEl) {
         const currentDate = new Date(JSON.parse(JSON.stringify(new Date())));
@@ -43,6 +44,11 @@ function GamePage() {
         dispatch(fetchGame(+gameId));
       }
     }
+  };
+
+  useEffect(() => {
+    dispatch(resetAttemptsGetGame());
+    request();
   }, []);
 
   useEffect(() => {
@@ -78,7 +84,7 @@ function GamePage() {
   }, [currentGame]);
 
   if (currentGameLoadingStatus === 'error') {
-    return <ErrorMessage />;
+    return <ErrorMessage attempts={attemptsGetGame} reRequest={request} />;
   }
 
   return (
