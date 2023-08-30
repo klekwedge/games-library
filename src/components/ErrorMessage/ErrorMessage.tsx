@@ -7,8 +7,6 @@ interface ErrorMessageProps {
 }
 
 function ErrorMessage({ reRequest, attempts }: ErrorMessageProps) {
-
-
   return (
     <Flex w="800px" gap="10px" m="0 auto" direction="column" data-testid="error-message">
       <svg id="500_Bill" viewBox="-8.5 9.5 560 250" data-testid="error-svg">
