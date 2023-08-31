@@ -1,6 +1,8 @@
-import { AiFillInfoCircle } from 'react-icons/ai';
+import { AiFillInfoCircle, AiTwotoneCalendar } from 'react-icons/ai';
 import { BsFillCpuFill } from 'react-icons/bs';
 import { FaGamepad, FaMemory } from 'react-icons/fa';
+import { HiCodeBracket } from 'react-icons/hi2';
+import { GiBroadsword } from 'react-icons/gi';
 import { FiHardDrive } from 'react-icons/fi';
 import { SiNvidia } from 'react-icons/si';
 import { Text, createStyles, Group, Paper, SimpleGrid, rem } from '@mantine/core';
@@ -9,17 +11,14 @@ const useStyles = createStyles((theme) => ({
   root: {
     marginBottom: '40px',
   },
-
   value: {
     fontSize: rem(22),
     fontWeight: 700,
     lineHeight: 1,
   },
-
   icon: {
     color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4],
   },
-
   title: {
     fontWeight: 700,
     fontSize: rem(24),
@@ -27,10 +26,10 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const icons = {
-  genre: AiFillInfoCircle,
+  genre: GiBroadsword,
   publisher: AiFillInfoCircle,
-  developer: AiFillInfoCircle,
-  releaseDate: AiFillInfoCircle,
+  developer: HiCodeBracket,
+  releaseDate: AiTwotoneCalendar,
   os: FaGamepad,
   processor: BsFillCpuFill,
   graphics: SiNvidia,
@@ -68,16 +67,16 @@ function GameInfo({ data, cols }: { data: StatsGrid[]; cols: number }) {
 
   return (
     <div className={classes.root}>
-        <SimpleGrid
-        data-testid='article'
-          cols={cols}
-          breakpoints={[
-            { maxWidth: 'md', cols: 2 },
-            { maxWidth: 'xs', cols: 1 },
-          ]}
-        >
-          {cards}
-        </SimpleGrid>
+      <SimpleGrid
+        data-testid="article"
+        cols={cols}
+        breakpoints={[
+          { maxWidth: 'md', cols: 2 },
+          { maxWidth: 'xs', cols: 1 },
+        ]}
+      >
+        {cards}
+      </SimpleGrid>
     </div>
   );
 }
