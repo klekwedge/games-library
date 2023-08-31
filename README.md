@@ -28,8 +28,11 @@
 
 ### Ссылки
 
-- [Ссылка на проект](https://github.com/klekwedge/games-library)
-- [Деплой](https://klekwedge-games-library.vercel.app/)
+- [Ссылка на Frontend проект](https://github.com/klekwedge/games-library)
+- [Деплой Frontend проекта](https://klekwedge-games-library.vercel.app/)
+
+- [Ссылка на Backend проект](https://github.com/klekwedge/games-library-backend)
+- [Деплой Backend проекта](https://klekwedge-games-library-backend.onrender.com/games)
 
 ## Мой процесс
 

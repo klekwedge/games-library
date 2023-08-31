@@ -28,8 +28,11 @@
 
 ### Links
 
-- [Solution URL](https://github.com/klekwedge/games-library)
-- [Live Site URL](https://klekwedge-games-library.vercel.app/)
+- [Link to Frontend project](https://github.com/klekwedge/games-library)
+- [Deploy Frontend project](https://klekwedge-games-library.vercel.app/)
+
+- [Link to Backend project](https://github.com/klekwedge/games-library-backend)
+- [Deploy Backend project](https://klekwedge-games-library-backend.onrender.com/games)
 
 ## My process
 
