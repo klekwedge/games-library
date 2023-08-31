@@ -33,6 +33,13 @@ const API_KEY = import.meta.env.VITE_API_KEY;
 
 export const fetchGames = createAsyncThunk('games/fetchGames', ({ genre, platform, sort }: { genre: string | null, platform: string | null, sort: string | null }) => {
   const { request } = useFetch();
+
+  // ! Закомментированная ссылка ниже это бэкенд для хостинга статики и API для инкапсуляции внешних запросов на Node.JS.
+  // ! Закомментировал данную ссылку, поскольку сервис Render может приостанавливать работу неактивных проектов, поэтому
+  // ! для избежания ситуации при которой игры не будут получены, я закомментировал данную ссылку.
+  // ! При необходимости ее можно раскомментировать и затестить бэкенд сервис, который написал.
+  // let basicUrl = 'https://klekwedge-games-library-backend.onrender.com/games'
+
   let basicUrl = `https://free-to-play-games-database.p.rapidapi.com/api/games?rapidapi-key=${API_KEY}`;
 
   basicUrl += genre ? `&category=${genre}` : ''
@@ -43,8 +50,16 @@ export const fetchGames = createAsyncThunk('games/fetchGames', ({ genre, platfor
 });
 
 export const fetchGame = createAsyncThunk('games/fetchGame', (id: number) => {
+  // ! Закомментированная ссылка ниже это бэкенд для хостинга статики и API для инкапсуляции внешних запросов на Node.JS.
+  // ! Закомментировал данную ссылку, поскольку сервис Render может приостанавливать работу неактивных проектов, поэтому
+  // ! для избежания ситуации при которой игры не будут получены, я закомментировал данную ссылку.
+  // ! При необходимости ее можно раскомментировать и затестить бэкенд сервис, который написал.
+  // const basicUrl = `https://klekwedge-games-library-backend.onrender.com/game?id=${id}`
+
+  const basicUrl = `https://free-to-play-games-database.p.rapidapi.com/api/game?id=${id}&rapidapi-key=${API_KEY}`;
+
   const { request } = useFetch();
-  return request(`https://free-to-play-games-database.p.rapidapi.com/api/game?id=${id}&rapidapi-key=${API_KEY}`);
+  return request(basicUrl);
 });
 
 const gamesSlice = createSlice({
